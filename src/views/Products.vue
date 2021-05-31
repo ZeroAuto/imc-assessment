@@ -1,8 +1,11 @@
 <template>
   <div id="products-list">
-    <img src="" />
+    <div class="primary-header">
+      <img :src="companyLogoUrl" />
+      <span>{{ salesRep.CompanyName }}</span>
+    </div>
     <div class="title">Product List</div>
-    <div>Click on a product to view it's details</div>
+    <div>Click on a product thumbnail view it's details</div>
     <div 
       v-if="products"
       class="product-list-container"
@@ -14,10 +17,7 @@
         @click="handleProductClick(product.ItemID)"
       >
         <div>
-          {{ product.ItemName }}
-        </div>
-        <div>
-          <img :src="`${product.PhotoName}?width=100`" />
+          <img :src="`${product.PhotoName}?width=250&height=250`" />
         </div>
       </div>
     </div>
@@ -39,8 +39,14 @@ export default {
 
   computed: {
     ...mapState([
+      'manufacturerId',
       'products',
+      'salesRep',
     ]),
+
+    companyLogoUrl() {
+      return `http://images.repzio.com/productimages/${this.manufacturerId}/logo${this.manufacturerId}_lg.jpg?width=100`
+    },
   },
 
   methods: {
@@ -65,6 +71,9 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+}
+.primary-header {
+  display: flex;
+  align-items: center;
 }
 </style>
