@@ -9,8 +9,15 @@ export default new Vuex.Store({
 		async fetchProducts(context) {
       const response = await axios.get('https://raw.githubusercontent.com/RepZio/TestApplication/master/test.json');
       context.commit('setProducts', response.data.items);
-
 		},
+
+    async fetchProduct({commit, state}, productId) {
+      if (!state.products) {
+        const response = await axios.get('https://raw.githubusercontent.com/RepZio/TestApplication/master/test.json');
+        commit('setProducts', response.data.items);
+      }
+      return state.products.find(product => product.ItemID === productId);
+    },
 	},
 
   mutations: {

@@ -1,9 +1,11 @@
 <template>
-  <div class="products">
+  <div id="products-list">
     <div v-if="products">
       <div
         v-for="product in products"
         :key="product.ItemID"
+        class="product-wrapper"
+        @click="handleProductClick(product.ItemID)"
       >
         {{ product.ItemName }}
       </div>
@@ -21,7 +23,7 @@ export default {
   name: 'Products',
 
   created() {
-    this.loadProducts();
+    this.fetchProducts();
   },
 
   computed: {
@@ -35,8 +37,8 @@ export default {
       'fetchProducts',
     ]),
 
-    loadProducts() {
-      this.fetchProducts();
+    handleProductClick(productId) {
+      this.$router.push({ path: `/products/${productId}`});
     },
   },
 }
