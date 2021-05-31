@@ -8,26 +8,35 @@
         {{ product.ItemName }}
       </div>
     </div>
+
+    <div v-else>
+      Loading Products...
+    </div>
   </div>
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
 export default {
   name: 'Products',
-
-  data() {
-    return {
-      products: null,
-    }
-  },
 
   created() {
     this.loadProducts();
   },
 
+  computed: {
+    ...mapState([
+      'products',
+    ]),
+  },
+
   methods: {
-    async loadProducts() {
-      this.products = await this.$store.dispatch('fetchProducts');
+    ...mapActions([
+      'fetchProducts',
+    ]),
+
+    loadProducts() {
+      this.fetchProducts();
     },
   },
 }
